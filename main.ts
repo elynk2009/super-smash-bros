@@ -713,22 +713,21 @@ scene.setBackgroundImage(img`
 game.splash("Choose Your Character")
 Character = 1
 myCharacter = sprites.create(img`
-    . . . . . 7 7 7 7 . . . . . . 
-    . . . 7 7 7 7 7 e e e e . . . 
-    . 7 7 7 d 7 7 e e e e e e . . 
-    7 7 7 7 d d e e e e e e . . . 
-    7 . 7 7 d d d e d d 7 d . . e 
-    . . 7 e e d d e d d e d d d e 
-    . . . e e e d d d d d d . . e 
-    . . . . 7 7 7 7 d d d d . . e 
-    . . e 7 7 7 7 7 7 7 e e e d e 
-    . e e e 7 d d d 7 7 7 e e d e 
-    . e e e e d d d 7 7 7 e e . e 
-    . e e e e d d 7 7 7 e . . . e 
-    . . 7 e e 7 7 e e e e . . . e 
-    . 7 7 7 7 7 7 7 7 7 7 . . . . 
-    . . . . e e e e . . . . . . . 
-    . . . . e e e e e . . . . . . 
+    ...................7777......
+    ................eeee77777....
+    ...............eeeeee77d7....
+    ................eeeeeedd77...
+    ................d7ddeddd777..
+    .............7dddeddeddee777.
+    .............7..ddddddeee..7.
+    .eeeeeeeeeeee7dddddd77777....
+    eeeeeeeeeeeee7ddddeeeeee77...
+    .eeeeeeeeeeee7d7ddeeeeeee7...
+    .............7...7eeeeeee77..
+    .............77.ee777eee7777.
+    ................eeeee777777e.
+    ...............ee777777777eee
+    ..............eeee.......eeee
     `, SpriteKind.Player)
 myCharacter.setStayInScreen(true)
 Level = 0
