@@ -1,3 +1,9 @@
+namespace SpriteKind {
+    export const Boomerrang = SpriteKind.create()
+}
+controller.combos.attachCombo("", function () {
+	
+})
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     if (Level == 0) {
         Character += 1
@@ -9,9 +15,45 @@ controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
         }
     }
 })
+controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
+    On_B_Button_Pressed()
+})
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     On_A_Button_Pressed()
     On_A_Button_Pressed()
+})
+function On_B_Button_Pressed () {
+    if (Level == 2) {
+        if (myCharacter.x > mySprite.x) {
+            projectile = sprites.createProjectileFromSprite(img`
+                . . . . . . . . . . . . . . . . . 8 . 8 . 8 
+                . . f f . . . . . . . . . . . . 8 . 8 . 8 . 
+                f f f e e e e e e e e e e e e e e e e e e e 
+                . . f f . . . . . . . . . . . . 8 . 8 . 8 . 
+                . . . . . . . . . . . . . . . . . 8 . 8 . 8 
+                `, myCharacter, -100, 0)
+            projectile.vy = 7
+            pause(500)
+        } else if (myCharacter.x != mySprite.x) {
+            projectile = sprites.createProjectileFromSprite(img`
+                8 . 8 . 8 . . . . . . . . . . . . . . . . . 
+                . 8 . 8 . 8 . . . . . . . . . . . . f f . . 
+                e e e e e e e e e e e e e e e e e e e f f f 
+                . 8 . 8 . 8 . . . . . . . . . . . . f f . . 
+                8 . 8 . 8 . . . . . . . . . . . . . . . . . 
+                `, myCharacter, 100, 0)
+            projectile.vy = 7
+            pause(500)
+        }
+    }
+}
+sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Player, function (sprite, otherSprite) {
+    if (sprite == myBoomerrang) {
+        mySprite.x += 0
+    }
+})
+controller.combos.attachCombo("lb", function () {
+    Combonation_Side_b()
 })
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
     myCharacter.vx = -75
@@ -22,6 +64,9 @@ controller.right.onEvent(ControllerButtonEvent.Released, function () {
 controller.left.onEvent(ControllerButtonEvent.Released, function () {
     myCharacter.vx = 0
 })
+controller.combos.attachCombo("rb", function () {
+    Combonation_Side_b()
+})
 statusbars.onZero(StatusBarKind.Health, function (status) {
     mySprite.destroy(effects.disintegrate, 1000)
     game.over(true, effects.confetti)
@@ -30,73 +75,70 @@ controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
     myCharacter.vx = 75
 })
 function OnGameUpdate2 () {
+	
+}
+function Combonation_Side_b () {
     if (Level == 2) {
-        if (controller.B.isPressed()) {
-            if (myCharacter.x > mySprite.x) {
-                projectile = sprites.createProjectileFromSprite(img`
-                    . . . . . . . . . . . . . . . . . 8 . 8 . 8 
-                    . . f f . . . . . . . . . . . . 8 . 8 . 8 . 
-                    f f f e e e e e e e e e e e e e e e e e e e 
-                    . . f f . . . . . . . . . . . . 8 . 8 . 8 . 
-                    . . . . . . . . . . . . . . . . . 8 . 8 . 8 
-                    `, myCharacter, -100, 0)
-            } else if (myCharacter.x != mySprite.x) {
-                projectile = sprites.createProjectileFromSprite(img`
-                    8 . 8 . 8 . . . . . . . . . . . . . . . . . 
-                    . 8 . 8 . 8 . . . . . . . . . . . . f f . . 
-                    e e e e e e e e e e e e e e e e e e e f f f 
-                    . 8 . 8 . 8 . . . . . . . . . . . . f f . . 
-                    8 . 8 . 8 . . . . . . . . . . . . . . . . . 
-                    `, myCharacter, 100, 0)
-            }
-            if (controller.right.isPressed()) {
-            	
-            } else if (controller.left.isPressed()) {
-            	
-            } else if (controller.up.isPressed()) {
-                myCharacter.vy += -50
-            }
-        }
-        if (controller.A.isPressed()) {
-            if (myCharacter.x < mySprite.x) {
-                myAttack = 1
-                myCharacter.setImage(img`
-                    ......7777...................
-                    ....77777eeee................
-                    ....7d77eeeeee...............
-                    ...77ddeeeeee................
-                    ..777dddedd7d................
-                    .777eeddeddeddd7.............
-                    .7..eeedddddd..7.............
-                    ....77777dddddd7eeeeeeeeeeee.
-                    ...77eeeeeedddd7eeeeeeeeeeeee
-                    ...7eeeeeeedd7d7eeeeeeeeeeee.
-                    ..77eeeeeee7...7.............
-                    .7777eee777ee.77.............
-                    .e777777eeeee................
-                    eee777777777ee...............
-                    eeee.......eeee..............
-                    `)
-            } else if (myCharacter.x > mySprite.x) {
-                myAttack = 1
-                myCharacter.setImage(img`
-                    ...................7777......
-                    ................eeee77777....
-                    ...............eeeeee77d7....
-                    ................eeeeeedd77...
-                    ................d7ddeddd777..
-                    .............7dddeddeddee777.
-                    .............7..ddddddeee..7.
-                    .eeeeeeeeeeee7dddddd77777....
-                    eeeeeeeeeeeee7ddddeeeeee77...
-                    .eeeeeeeeeeee7d7ddeeeeeee7...
-                    .............7...7eeeeeee77..
-                    .............77.ee777eee7777.
-                    ................eeeee777777e.
-                    ...............ee777777777eee
-                    ..............eeee.......eeee
-                    `)
-            }
+        projectile.destroy()
+        myBoomerrang = sprites.create(img`
+            e d 7 . . 
+            . e 7 7 . 
+            . . e 7 d 
+            . . e d d 
+            . . e d d 
+            . . e d d 
+            . e d d . 
+            e d d . . 
+            `, SpriteKind.Projectile)
+        myBoomerrang.setPosition(myCharacter.x, myCharacter.y)
+        animation.runImageAnimation(
+        myBoomerrang,
+        [img`
+            . . . e d 7 . . 
+            . . . . e 7 7 . 
+            . . . . . e 7 d 
+            . . . . . e d d 
+            . . . . . e d d 
+            . . . . . e d d 
+            . . . . e d d . 
+            . . . e d d . . 
+            `,img`
+            . . . . . . . . 
+            . . . . . . . . 
+            . . . . . . . . 
+            e . . . . . . e 
+            d e . . . . e d 
+            d d e e e e 7 7 
+            . d d d d 7 7 . 
+            . . d d d d . . 
+            `,img`
+            . . d d e . . . 
+            . d d e . . . . 
+            d d e . . . . . 
+            d d e . . . . . 
+            d d e . . . . . 
+            d 7 e . . . . . 
+            . 7 7 e . . . . 
+            . . 7 d e . . . 
+            `,img`
+            . . d d d d . . 
+            . 7 7 d d d d . 
+            7 7 e e e e d d 
+            d e . . . . e d 
+            e . . . . . . e 
+            . . . . . . . . 
+            . . . . . . . . 
+            . . . . . . . . 
+            `],
+        90,
+        true
+        )
+        if (myCharacter.x > mySprite.x) {
+            myBoomerrang.ax = 100
+            myBoomerrang.vx += -150
+        } else if (myCharacter.x < mySprite.x) {
+            myBoomerrang.ax = -100
+            myBoomerrang.vx += 150
         }
     }
 }
@@ -467,11 +509,54 @@ function On_A_Button_Pressed () {
         mySprite.ay = 400
         Level += 1
         myCharacter.setStayInScreen(false)
+        if (myCharacter.x < mySprite.x && Level == 2) {
+            myAttack = 1
+            myCharacter.setImage(img`
+                ......7777...................
+                ....77777eeee................
+                ....7d77eeeeee...............
+                ...77ddeeeeee................
+                ..777dddedd7d................
+                .777eeddeddeddd7.............
+                .7..eeedddddd..7.............
+                ....77777dddddd7eeeeeeeeeeee.
+                ...77eeeeeedddd7eeeeeeeeeeeee
+                ...7eeeeeeedd7d7eeeeeeeeeeee.
+                ..77eeeeeee7...7.............
+                .7777eee777ee.77.............
+                .e777777eeeee................
+                eee777777777ee...............
+                eeee.......eeee..............
+                `)
+        } else if (myCharacter.x > mySprite.x && Level == 2) {
+            myAttack = 1
+            myCharacter.setImage(img`
+                ...................7777......
+                ................eeee77777....
+                ...............eeeeee77d7....
+                ................eeeeeedd77...
+                ................d7ddeddd777..
+                .............7dddeddeddee777.
+                .............7..ddddddeee..7.
+                .eeeeeeeeeeee7dddddd77777....
+                eeeeeeeeeeeee7ddddeeeeee77...
+                .eeeeeeeeeeee7d7ddeeeeeee7...
+                .............7...7eeeeeee77..
+                .............77.ee777eee7777.
+                ................eeeee777777e.
+                ...............ee777777777eee
+                ..............eeee.......eeee
+                `)
+        }
     }
 }
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
-    statusbar2.value += -0.25
-    sprite.destroy()
+    if (sprite == projectile) {
+        statusbar2.value += -0.25
+        sprite.destroy()
+    } else if (sprite == myBoomerrang) {
+        statusbar2.value += -0.4
+    }
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
     if (myAttack == 0) {
@@ -496,6 +581,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
 let statusbar2: StatusBarSprite = null
 let statusbar: StatusBarSprite = null
 let Opponent = 0
+let myBoomerrang: Sprite = null
 let projectile: Sprite = null
 let mySprite: Sprite = null
 let myAttack = 0
