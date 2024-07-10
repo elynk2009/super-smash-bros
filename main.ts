@@ -1,9 +1,6 @@
 namespace SpriteKind {
     export const Boomerrang = SpriteKind.create()
 }
-controller.combos.attachCombo("", function () {
-	
-})
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     if (Level == 0) {
         Character += 1
@@ -23,35 +20,38 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     On_A_Button_Pressed()
 })
 function On_B_Button_Pressed () {
-    if (Level == 2) {
-        if (myCharacter.x > mySprite.x) {
-            projectile = sprites.createProjectileFromSprite(img`
-                . . . . . . . . . . . . . . . . . 8 . 8 . 8 
-                . . f f . . . . . . . . . . . . 8 . 8 . 8 . 
-                f f f e e e e e e e e e e e e e e e e e e e 
-                . . f f . . . . . . . . . . . . 8 . 8 . 8 . 
-                . . . . . . . . . . . . . . . . . 8 . 8 . 8 
-                `, myCharacter, -100, 0)
-            projectile.vy = 7
-            pause(500)
-        } else if (myCharacter.x != mySprite.x) {
-            projectile = sprites.createProjectileFromSprite(img`
-                8 . 8 . 8 . . . . . . . . . . . . . . . . . 
-                . 8 . 8 . 8 . . . . . . . . . . . . f f . . 
-                e e e e e e e e e e e e e e e e e e e f f f 
-                . 8 . 8 . 8 . . . . . . . . . . . . f f . . 
-                8 . 8 . 8 . . . . . . . . . . . . . . . . . 
-                `, myCharacter, 100, 0)
-            projectile.vy = 7
-            pause(500)
+    if (TheBoomerrang == 0) {
+        if (Level == 2) {
+            if (myCharacter.x > mySprite.x) {
+                myArrow = sprites.createProjectileFromSprite(img`
+                    . . . . . . . . . . . . . . . . . 8 . 8 . 8 
+                    . . f f . . . . . . . . . . . . 8 . 8 . 8 . 
+                    f f f e e e e e e e e e e e e e e e e e e e 
+                    . . f f . . . . . . . . . . . . 8 . 8 . 8 . 
+                    . . . . . . . . . . . . . . . . . 8 . 8 . 8 
+                    `, myCharacter, -100, 0)
+                myArrow.ax = 7
+                pause(500)
+            } else if (myCharacter.x != mySprite.x) {
+                myArrow = sprites.createProjectileFromSprite(img`
+                    8 . 8 . 8 . . . . . . . . . . . . . . . . . 
+                    . 8 . 8 . 8 . . . . . . . . . . . . f f . . 
+                    e e e e e e e e e e e e e e e e e e e f f f 
+                    . 8 . 8 . 8 . . . . . . . . . . . . f f . . 
+                    8 . 8 . 8 . . . . . . . . . . . . . . . . . 
+                    `, myCharacter, 100, 0)
+                myArrow.ax = 7
+                pause(500)
+            }
         }
     }
 }
-sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Player, function (sprite, otherSprite) {
-    if (sprite == myBoomerrang) {
-        mySprite.x += 0
+function Boomerang () {
+    if (mySprite.x > myCharacter.x && myBoomerrang.vx < 0 || mySprite.x < myCharacter.x && myBoomerrang.vx > 0) {
+        sprites.destroy(myBoomerrang)
+        TheBoomerrang = 0
     }
-})
+}
 controller.combos.attachCombo("lb", function () {
     Combonation_Side_b()
 })
@@ -67,6 +67,11 @@ controller.left.onEvent(ControllerButtonEvent.Released, function () {
 controller.combos.attachCombo("rb", function () {
     Combonation_Side_b()
 })
+sprites.onOverlap(SpriteKind.Boomerrang, SpriteKind.Enemy, function (sprite, otherSprite) {
+    if (sprite == myBoomerrang) {
+        statusbar2.value += -0.27
+    }
+})
 statusbars.onZero(StatusBarKind.Health, function (status) {
     mySprite.destroy(effects.disintegrate, 1000)
     game.over(true, effects.confetti)
@@ -74,71 +79,144 @@ statusbars.onZero(StatusBarKind.Health, function (status) {
 controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
     myCharacter.vx = 75
 })
+controller.combos.attachCombo("db", function () {
+    if (Character == 1) {
+        myCharacter.setImage(img`
+            ..........2...
+            .........f....
+            ........f.....
+            .......f......
+            ......ff......
+            .....ffff.....
+            ....f1ffff....
+            ...f1ffffff...
+            ...f1ffffff...
+            ...f1ffffff...
+            ...f1ffffff...
+            ....f1ffff....
+            .....ffff.....
+            dd...7777...dd
+            ddd.7eeee7.ddd
+            ee.7eeeeee7.ee
+            eeded7dd7dedee
+            eedddeddedddee
+            .eeddddddddee.
+            .eeeddeeddeee.
+            .eee7deed7eee.
+            ..e77777777e..
+            ..e77777777e..
+            ..777eeee777..
+            ..eeeeddeeee..
+            ..777eeee777..
+            ..7777777777..
+            ...eee..eee...
+            ...eee..eee...
+            `)
+    } else if (Character == 2) {
+    	
+    } else if (Character == 3) {
+    	
+    } else if (Character == 4) {
+    	
+    }
+})
 function OnGameUpdate2 () {
-	
+    if (myBoomerrang) {
+        if (myCharacter.x > myBoomerrang.x) {
+            myBoomerrang.ax = 100
+        } else if (myCharacter.x < myBoomerrang.x) {
+            myBoomerrang.ax = -100
+        } else if (myCharacter.y > myBoomerrang.y) {
+            myBoomerrang.ay = 100
+        } else if (myCharacter.y < myBoomerrang.y) {
+            myBoomerrang.ay = -100
+        }
+    }
+}
+function doSomething () {
+    if (myAttack == 0) {
+        if (myCharacter.x < mySprite.x) {
+            mySprite.x += 2
+            myCharacter.x += -2
+        } else if (myCharacter.x > mySprite.x) {
+            mySprite.x += -2
+            myCharacter.x += 2
+        }
+    } else if (myAttack == 1) {
+        statusbar2.value += -0.25
+        if (myCharacter.x < mySprite.x) {
+            mySprite.x += 2
+            myCharacter.x += -2
+        } else if (myCharacter.x > mySprite.x) {
+            mySprite.x += -2
+            myCharacter.x += 2
+        }
+    }
 }
 function Combonation_Side_b () {
-    if (Level == 2) {
-        projectile.destroy()
-        myBoomerrang = sprites.create(img`
-            e d 7 . . 
-            . e 7 7 . 
-            . . e 7 d 
-            . . e d d 
-            . . e d d 
-            . . e d d 
-            . e d d . 
-            e d d . . 
-            `, SpriteKind.Projectile)
-        myBoomerrang.setPosition(myCharacter.x, myCharacter.y)
-        animation.runImageAnimation(
-        myBoomerrang,
-        [img`
-            . . . e d 7 . . 
-            . . . . e 7 7 . 
-            . . . . . e 7 d 
-            . . . . . e d d 
-            . . . . . e d d 
-            . . . . . e d d 
-            . . . . e d d . 
-            . . . e d d . . 
-            `,img`
-            . . . . . . . . 
-            . . . . . . . . 
-            . . . . . . . . 
-            e . . . . . . e 
-            d e . . . . e d 
-            d d e e e e 7 7 
-            . d d d d 7 7 . 
-            . . d d d d . . 
-            `,img`
-            . . d d e . . . 
-            . d d e . . . . 
-            d d e . . . . . 
-            d d e . . . . . 
-            d d e . . . . . 
-            d 7 e . . . . . 
-            . 7 7 e . . . . 
-            . . 7 d e . . . 
-            `,img`
-            . . d d d d . . 
-            . 7 7 d d d d . 
-            7 7 e e e e d d 
-            d e . . . . e d 
-            e . . . . . . e 
-            . . . . . . . . 
-            . . . . . . . . 
-            . . . . . . . . 
-            `],
-        90,
-        true
-        )
-        if (myCharacter.x > mySprite.x) {
-            myBoomerrang.ax = 100
-            myBoomerrang.vx += -150
-        } else if (myCharacter.x < mySprite.x) {
-            myBoomerrang.ax = -100
-            myBoomerrang.vx += 150
+    if (TheBoomerrang == 0) {
+        if (Level == 2) {
+            TheBoomerrang = 1
+            myArrow.destroy()
+            myBoomerrang = sprites.create(img`
+                e d 7 . . 
+                . e 7 7 . 
+                . . e 7 d 
+                . . e d d 
+                . . e d d 
+                . . e d d 
+                . e d d . 
+                e d d . . 
+                `, SpriteKind.Boomerrang)
+            The_Boomerrang = 1
+            myBoomerrang.setPosition(myCharacter.x, myCharacter.y)
+            animation.runImageAnimation(
+            myBoomerrang,
+            [img`
+                . . . e d 7 . . 
+                . . . . e 7 7 . 
+                . . . . . e 7 d 
+                . . . . . e d d 
+                . . . . . e d d 
+                . . . . . e d d 
+                . . . . e d d . 
+                . . . e d d . . 
+                `,img`
+                . . . . . . . . 
+                . . . . . . . . 
+                . . . . . . . . 
+                e . . . . . . e 
+                d e . . . . e d 
+                d d e e e e 7 7 
+                . d d d d 7 7 . 
+                . . d d d d . . 
+                `,img`
+                . . d d e . . . 
+                . d d e . . . . 
+                d d e . . . . . 
+                d d e . . . . . 
+                d d e . . . . . 
+                d 7 e . . . . . 
+                . 7 7 e . . . . 
+                . . 7 d e . . . 
+                `,img`
+                . . d d d d . . 
+                . 7 7 d d d d . 
+                7 7 e e e e d d 
+                d e . . . . e d 
+                e . . . . . . e 
+                . . . . . . . . 
+                . . . . . . . . 
+                . . . . . . . . 
+                `],
+            90,
+            true
+            )
+            if (myCharacter.x > mySprite.x) {
+                myBoomerrang.vx += -150
+            } else if (myCharacter.x < mySprite.x) {
+                myBoomerrang.vx += 150
+            }
         }
     }
 }
@@ -487,6 +565,9 @@ function OnGameUpdate () {
         }
     }
 }
+sprites.onOverlap(SpriteKind.Boomerrang, SpriteKind.Player, function (sprite, otherSprite) {
+    Boomerang()
+})
 function On_A_Button_Pressed () {
     if (Level == 0) {
         mySprite = sprites.create(assets.image`Opponent Link`, SpriteKind.Enemy)
@@ -551,39 +632,22 @@ function On_A_Button_Pressed () {
     }
 }
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
-    if (sprite == projectile) {
+    if (sprite == myArrow) {
         statusbar2.value += -0.25
         sprite.destroy()
-    } else if (sprite == myBoomerrang) {
-        statusbar2.value += -0.4
     }
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
-    if (myAttack == 0) {
-        if (myCharacter.x < mySprite.x) {
-            mySprite.x += 2
-            myCharacter.x += -2
-        } else if (myCharacter.x > mySprite.x) {
-            mySprite.x += -2
-            myCharacter.x += 2
-        }
-    } else if (myAttack == 1) {
-        statusbar2.value += -0.25
-        if (myCharacter.x < mySprite.x) {
-            mySprite.x += 2
-            myCharacter.x += -2
-        } else if (myCharacter.x > mySprite.x) {
-            mySprite.x += -2
-            myCharacter.x += 2
-        }
-    }
+    doSomething()
 })
-let statusbar2: StatusBarSprite = null
 let statusbar: StatusBarSprite = null
 let Opponent = 0
+let The_Boomerrang = 0
+let statusbar2: StatusBarSprite = null
 let myBoomerrang: Sprite = null
-let projectile: Sprite = null
+let myArrow: Sprite = null
 let mySprite: Sprite = null
+let TheBoomerrang = 0
 let myAttack = 0
 let Level = 0
 let myCharacter: Sprite = null
@@ -713,21 +777,22 @@ scene.setBackgroundImage(img`
 game.splash("Choose Your Character")
 Character = 1
 myCharacter = sprites.create(img`
-    ...................7777......
-    ................eeee77777....
-    ...............eeeeee77d7....
-    ................eeeeeedd77...
-    ................d7ddeddd777..
-    .............7dddeddeddee777.
-    .............7..ddddddeee..7.
-    .eeeeeeeeeeee7dddddd77777....
-    eeeeeeeeeeeee7ddddeeeeee77...
-    .eeeeeeeeeeee7d7ddeeeeeee7...
-    .............7...7eeeeeee77..
-    .............77.ee777eee7777.
-    ................eeeee777777e.
-    ...............ee777777777eee
-    ..............eeee.......eeee
+    . . . . . 7 7 7 7 . . . . . . 
+    . . . 7 7 7 7 7 e e e e . . . 
+    . 7 7 7 d 7 7 e e e e e e . . 
+    7 7 7 7 d d e e e e e e . . . 
+    7 . 7 7 d d d e d d 7 d . . e 
+    . . 7 e e d d e d d e d d d e 
+    . . . e e e d d d d d d . . e 
+    . . . . 7 7 7 7 d d d d . . e 
+    . . e 7 7 7 7 7 7 7 e e e d e 
+    . e e e 7 d d d 7 7 7 e e d e 
+    . e e e e d d d 7 7 7 e e . e 
+    . e e e e d d 7 7 7 e . . . e 
+    . . 7 e e 7 7 e e e e . . . e 
+    . 7 7 7 7 7 7 7 7 7 7 . . . . 
+    . . . . e e e e . . . . . . . 
+    . . . . e e e e e . . . . . . 
     `, SpriteKind.Player)
 myCharacter.setStayInScreen(true)
 Level = 0
