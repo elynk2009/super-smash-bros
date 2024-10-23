@@ -3,25 +3,6 @@ namespace myImages {
 
     helpers._registerFactory("image", function(name: string) {
         switch(helpers.stringTrim(name)) {
-            case "OG!K`c,stS8teITP^u4{":
-            case "Opponent Link":return img`
-. . . . . . 7 7 7 7 3 . . . . 
-. . . e e e e 7 7 7 7 7 . . . 
-. . e e e e e e 7 7 d 7 7 7 . 
-. . . e e e e e e d d 7 7 7 7 
-e . . d 7 d d e d d d 7 7 . 7 
-e d d d e d d e d d e e 7 . . 
-e . . d d d d d d e e e . . . 
-e . . d d d d 7 7 7 7 . . . . 
-e d e e e 7 7 7 7 7 7 7 e . . 
-e d e e 7 7 7 d d d 7 e e e . 
-e . e e 7 7 7 d d d e e e e . 
-e . . . e 7 7 7 d d e e e e . 
-e . . . e e e e 7 7 e e 7 . . 
-. . . . 7 7 7 7 7 7 7 7 7 7 . 
-. . . . . . . e e e e . . . . 
-. . . . . . e e e e e . . . . 
-`;
             case "d4j1pveRC*nb=@U+D{HZ":
             case "Opponent Mario":return img`
 . . . . 2 2 2 2 2 . . . 
@@ -71,13 +52,32 @@ f f 5 f . . f 5 5 f 5 f f
 . . . . . 2 2 2 . . . . . 
 . . . . . . d . . . . . . 
 . . . . . d d d . . . . . 
-. . . d d d d d d d . . . 
-. . d . f f f f f . d . . 
-2 2 . . f f f f f . . 2 2 
+. . d d d d d d d d d . . 
+. d d d f f f f f d d d . 
+2 2 d . f f f f f . d 2 2 
 2 2 . . . f f f . . . 2 2 
 . . . . . f . f . . . . . 
 . . . . 2 2 . 2 2 . . . . 
 . . . 2 2 2 . 2 2 2 . . . 
+`;
+            case "OG!K`c,stS8teITP^u4{":
+            case "Opponent Link":return img`
+. . . . . . 7 7 7 7 3 . . . . 
+. . . e e e e 7 7 7 7 7 . . . 
+. . e e e e e e 7 7 d 7 7 7 . 
+. . . e e e e e e d d 7 7 7 7 
+e . . d 7 d d e d d d 7 7 . 7 
+e d d d e d d e d d e e 7 . . 
+e . . d d d d d d e e e . . . 
+e . . d d d d 7 7 7 7 . . . 3 
+e d e e e 7 7 7 7 7 7 7 e . 3 
+e d e e 7 7 7 d d d 7 e e e . 
+e . e e 7 7 7 d d d e e e e . 
+e . . . e 7 7 7 d d e e e e . 
+e . . . e e e e 7 7 e e 7 . . 
+. . . . 7 7 7 7 7 7 7 7 7 7 . 
+. . . . . . . e e e e . . . . 
+. . . . . . e e e e e . . . . 
 `;
         }
         return null;
