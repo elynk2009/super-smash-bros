@@ -8,7 +8,9 @@ namespace SpriteKind {
     export const Lightning2 = SpriteKind.create()
 }
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
-    Character += 1
+    if (Level == 1) {
+        Character += 1
+    }
 })
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     A_Button()
@@ -18,12 +20,24 @@ function A_Button () {
         Level += 1
         tiles.setCurrentTilemap(tilemap`level4`)
         scene.setBackgroundColor(1)
-        myCharacter.ay = 200
+        myCharacter.ay = 300
         scene.cameraFollowSprite(myCharacter)
+    } else if (Level == 2) {
+        myCharacter.vy += -200
+    } else {
+    	
     }
 }
+controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
+	
+})
+controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
+	
+})
 controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
-    Character += -1
+    if (Level == 1) {
+        Character += -1
+    }
 })
 let myCharacter: Sprite = null
 let Level = 0
@@ -46,5 +60,12 @@ game.onUpdate(function () {
         } else if (Character == 0) {
             Character = 3
         }
+    } else if (Level == 2) {
+        if (controller.right.isPressed()) {
+            let mySprite: Sprite = null
+            mySprite.x += 2
+        }
+    } else {
+    	
     }
 })
