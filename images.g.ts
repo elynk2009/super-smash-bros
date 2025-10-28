@@ -3,23 +3,6 @@ namespace myImages {
 
     helpers._registerFactory("image", function(name: string) {
         switch(helpers.stringTrim(name)) {
-            case "2baV9I/RH^N8BtD?Lj)a":
-            case "Opponent Pikachu":return img`
-. . . . . . . f . . . . . 
-f f f . . . f 5 f . f f f 
-f f 5 f . . f 5 5 f 5 f f 
-. f 5 5 f f f f f 5 5 f . 
-. . f 5 5 5 5 5 5 5 f . . 
-. . f 5 f 5 5 5 f 5 f . . 
-. . f 5 5 5 f 5 5 5 f . . 
-. f 5 2 5 f f f 5 2 5 f . 
-. f 5 5 5 5 5 5 5 5 5 f . 
-. f 5 5 f 5 5 5 f 5 5 f . 
-. f 5 f f 5 5 5 f f 5 f . 
-. f 5 5 5 5 5 5 5 5 5 f . 
-. . f 5 5 f f f 5 5 f . . 
-. . . f f . . . f f . . . 
-`;
             case "M3o7viS2w2Wpe4hqBtP(":
             case "Opponent Captain Falcon":return img`
 . . . . . 2 2 2 . . . . . 
@@ -78,6 +61,25 @@ d d 8 8 8 8 8 8 8 8 d d
 . . 8 8 8 . . 8 8 8 . . 
 . e e e . . . . e e e . 
 e e e e . . . . e e e e 
+`;
+            case "2baV9I/RH^N8BtD?Lj)a":
+            case "Opponent Pikachu":return img`
+. . . . . f . . . . . . . 
+. . . . . f . . . . . . . 
+f f f . f 5 f . . . f f f 
+f f 5 f 5 5 f . . f 5 f f 
+. f 5 5 f f f f f 5 5 f . 
+. . f 5 5 5 5 5 5 5 f . . 
+. . f 5 f 5 5 5 f 5 f . . 
+. . f 5 5 5 f 5 5 5 f . . 
+. f 5 5 5 f f f 5 5 5 f . 
+. f 5 2 5 5 5 5 5 2 5 f . 
+. f 5 5 5 5 5 5 5 5 5 f . 
+. f 5 5 f 5 5 5 f 5 5 f . 
+. f 5 f f 5 5 5 f f 5 f . 
+. f 5 5 5 5 5 5 5 5 5 f . 
+. . f 5 5 f f f 5 5 f . . 
+. . . f f . . . f f . . . 
 `;
         }
         return null;
